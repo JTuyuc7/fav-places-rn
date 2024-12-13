@@ -1,13 +1,15 @@
-import { Alert, Button, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker';
+import { useState } from "react";
+import { Colors } from "@/constants/Colors";
+import OutlineButton from "../ui/OutlineButton";
 
 function ImagePicker() {
+  const [imageObject, setImageObject] = useState<string>();
   const [cameraPermissionInformation, requestedPermission] = useCameraPermissions();
 
   const verifyPermissions = async () => {
     const response = await requestedPermission();
-    console.log("🚀 ~ verifyPermissions ~ response:", response)
-    // console.log(cameraPermissionInformation?.status, 'cameraPermissionInformation')
     if (cameraPermissionInformation?.status === PermissionStatus.UNDETERMINED) {
       const permissionResponse = await requestedPermission();
       return permissionResponse.granted
@@ -21,7 +23,7 @@ function ImagePicker() {
     return true;
   }
   const takeImageHandler = async () => {
-    console.log('camera pressed')
+
     const hasPermission = await verifyPermissions();
     if (!hasPermission) return;
 
@@ -30,18 +32,40 @@ function ImagePicker() {
       aspect: [16, 9],
       quality: 0.5
     });
-    console.log(image, 'image')
+
+    setImageObject(image?.assets?.[0]?.uri);
+  }
+
+  console.log(imageObject, 'imageObject');
+  let imagePreview = <Text>No Image taken yet.</Text>;
+  if (imageObject) {
+    imagePreview = <Image source={{ uri: imageObject }} style={styles.image} />
   }
 
   return (
     <View>
-
-      <View>
-
+      <View style={styles.imagePreview}>
+        {imagePreview}
       </View>
-      <Button title="Take Image" onPress={takeImageHandler} />
+      <OutlineButton color={Colors.primary100} onPress={takeImageHandler} iconName="camera" size={22}> Take Image</OutlineButton>
     </View>
   )
 }
 
 export default ImagePicker;
+
+const styles = StyleSheet.create({
+  imagePreview: {
+    width: '100%',
+    height: 200,
+    marginVertical: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.primary100,
+    borderRadius: 5
+  },
+  image: {
+    width: '100%',
+    height: '100%'
+  }
+})
