@@ -36,7 +36,7 @@ function ImagePicker() {
     setImageObject(image?.assets?.[0]?.uri);
   }
 
-  console.log(imageObject, 'imageObject');
+
   let imagePreview = <Text>No Image taken yet.</Text>;
   if (imageObject) {
     imagePreview = <Image source={{ uri: imageObject }} style={styles.image} />
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.primary100,
-    borderRadius: 5
+    borderRadius: 5,
+    overflow: 'hidden'
   },
   image: {
     width: '100%',

@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import ImagePicker from "../Utils/ImagePicker";
+import LocationPicker from "../Utils/LocationPicker";
 
 function AddPlaceForm() {
   const router = useRouter();
@@ -23,10 +24,7 @@ function AddPlaceForm() {
         <TextInput keyboardType="default" style={styles.input} onChange={changeTitleHandle} value={placeName} />
 
         <ImagePicker />
-
-        <Text>Entered text {placeName}</Text>
-        <Text>Place Description</Text>
-        <Text>Place Image</Text>
+        <LocationPicker />
       </View>
     </ScrollView>
   )
