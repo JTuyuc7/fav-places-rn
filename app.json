@@ -38,6 +38,18 @@
         {
           "cameraPermission": "The app needs access to your camera to take photos."
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "The app needs access to your location to show you where you are on the map."
+        }
+      ],
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsVersion": "11.0.0"
+        }
       ]
     ],
     "experiments": {
