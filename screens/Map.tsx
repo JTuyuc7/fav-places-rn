@@ -2,9 +2,9 @@ import { Button, Text, View } from "react-native";
 import MapView, { Marker } from 'react-native-maps';
 
 import { useRouter } from 'expo-router';
-import MapboxGL from '@rnmapbox/maps';
+// import MapboxGL from '@rnmapbox/maps';
 
-MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MBOX_API_KEY ?? '')
+// MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MBOX_API_KEY ?? '')
 export interface MapScreenProps {
   latitude: number;
   longitude: number;
@@ -24,12 +24,13 @@ export default function MapScreen({ latitude, longitude, latitudeDelta = 0.0922,
         longitudeDelta: longitudeDelta
       }}>
       </MapView> */}
-      <MapboxGL.MapView style={{ flex: 1 }}>
+      {/* <MapboxGL.MapView style={{ flex: 1 }}>
         <MapboxGL.Camera
           zoomLevel={14}
           centerCoordinate={[longitude, latitude]} // Longitude, Latitude
         />
-      </MapboxGL.MapView>
+      </MapboxGL.MapView> */}
+      <Text>Map Screen comming soon...</Text>
     </View>
   )
 }
