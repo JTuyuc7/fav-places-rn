@@ -12,6 +12,11 @@ interface PlacesListProps {
 function PlacesList({ places }: PlacesListProps) {
   const router = useRouter()
 
+  const openPlaceDetailHandler = (id: number) => {
+    // router.push(`/(place)/PlaceDetails/${id}` as any)
+    router.navigate({ pathname: '/(place)/PlaceDetails', params: { id } })
+  }
+
   if (places.length === 0) {
     return (
       <View style={styles.fallbackContainer}>
@@ -27,7 +32,7 @@ function PlacesList({ places }: PlacesListProps) {
         style={styles.list}
         data={places}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <PlaceItem place={item} onSelect={() => console.log('item pressed' + item.id)} />}
+        renderItem={({ item }) => <PlaceItem place={item} onSelect={() => openPlaceDetailHandler(item.id as any)} />}
       />
     </View>
   );

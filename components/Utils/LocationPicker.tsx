@@ -62,11 +62,22 @@ function LocationPicker({ lat = 0, lng = 0, onPickLocation }: LocationPickerProp
     })
   }
 
-  const pickOnMapHandler = () => {
+  const pickOnMapHandler = async () => {
     // TODO: Find another alternative to render the map
     //* see https://github.com/rnmapbox/maps?tab=readme-ov-file
     // console.log(locationObject, 'locationObject')
-    router.push({ pathname: '/(map)', params: { ...locationObject } });
+    // navigation.navigate('/(map)', { ...locationObject, isReadOnly: false });
+
+    const hasPermission = await verifyPermissions();
+    if (!hasPermission) return;
+
+    const location = await getCurrentPositionAsync();
+    let localLocationObject = {
+      lat: location.coords.latitude,
+      lng: location.coords.longitude
+    }
+
+    router.push({ pathname: '/(map)', params: { ...localLocationObject, isReadOnly: 'false' } })
   }
 
   let imagePreview = <Text>No location preview.</Text>;

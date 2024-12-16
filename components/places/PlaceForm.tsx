@@ -1,4 +1,4 @@
-import { Alert, NativeSyntheticEvent, ScrollView, StyleSheet, Text, TextInput, TextInputChangeEventData, View } from "react-native";
+import { NativeSyntheticEvent, ScrollView, StyleSheet, Text, TextInput, TextInputChangeEventData, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
@@ -34,7 +34,7 @@ function AddPlaceForm() {
     }
 
     let tempId = Math.random().toString();
-    const place = new Place(tempId, placeName, selectedImage, humanAddress, selectedLocation);
+    const place = new Place(tempId, placeName, selectedImage, humanAddress, selectedLocation.lat, selectedLocation.lng);
 
     try {
       await insertPlace(place as PlaceProps);

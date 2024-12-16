@@ -1,6 +1,3 @@
-// import AllPlacesScreen from "@/screens/AllPlacesScreen"
-import { Text, View, Button } from "react-native"
-import { useLocalSearchParams, useRouter } from "expo-router"
 import PlacesList from "@/components/places/PlacesList"
 import { useEffect, useState } from "react"
 import { useIsFocused } from "@react-navigation/native"
@@ -23,6 +20,10 @@ export default function AllPlacesScreen() {
       }
     }
     fetchAllPlaces()
+
+    return () => {
+      setPlaces([])
+    }
   }, [isFoucused])
 
   return (

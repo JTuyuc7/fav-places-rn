@@ -1,16 +1,14 @@
 import MapScreen from "@/screens/Map";
-import { Button, Text, View } from "react-native";
-import { useLocalSearchParams, useRouter } from 'expo-router'
-import { LocationProps } from "@/components/Utils/MapPreview";
-
+import { useLocalSearchParams } from 'expo-router'
 
 export default function Map() {
-  const router = useRouter()
-  const { lat, lng } = useLocalSearchParams();
+  const { lat, lng, isReadOnly: isReadOnlyParam } = useLocalSearchParams();
   const latitude = Array.isArray(lat) ? parseFloat(lat[0]) : parseFloat(lat);
   const longitude = Array.isArray(lng) ? parseFloat(lng[0]) : parseFloat(lng);
 
+  const isReadOnly = Array.isArray(isReadOnlyParam) ? isReadOnlyParam[0] : isReadOnlyParam;
+
   return (
-    <MapScreen latitude={latitude} longitude={longitude} />
+    <MapScreen latitude={latitude} longitude={longitude} isReadOnly={isReadOnly} />
   )
 }

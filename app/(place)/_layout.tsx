@@ -19,7 +19,14 @@ export default function PlaceLayout() {
           headerTintColor: Colors.gray700,
           contentStyle: { backgroundColor: Colors.primary700 }
         }}
-      />
+      >
+        <Stack.Screen name="PlacesList" />
+        <Stack.Screen name="PlaceDetails"
+          options={{
+            title: 'Place Details'
+          }}
+        />
+      </Stack>
     </>
   )
 }
