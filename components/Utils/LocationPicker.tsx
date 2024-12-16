@@ -3,13 +3,34 @@ import OutlineButton from "../ui/OutlineButton";
 import { useRouter } from 'expo-router'
 import { Colors } from "@/constants/Colors";
 import { getCurrentPositionAsync, useForegroundPermissions, PermissionStatus } from 'expo-location'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LocationProps, mapPreview } from "./MapPreview";
 
-function LocationPicker() {
+interface LocationPickerProps {
+  lat?: number;
+  lng?: number;
+  onPickLocation?: (location: LocationProps) => void;
+}
+
+function LocationPicker({ lat = 0, lng = 0, onPickLocation }: LocationPickerProps): JSX.Element {
   const router = useRouter();
   const [locationObject, setLocationObject] = useState<LocationProps>({ lat: 0, lng: 0 });
   const [locationPermissionInformation, requestedPermission] = useForegroundPermissions();
+
+  // TODO: Refactor to load the location when the screen is loaded and when the user selects the location
+  // useEffect(() => {
+  //   async function checkOnloadPermission() {
+  //     await getLocationHandler();
+  //   }
+  //   checkOnloadPermission();
+  // }, [])
+
+  useEffect(() => {
+    if (lat && lng) {
+      setLocationObject({ lat, lng })
+      onPickLocation && onPickLocation({ lat, lng })
+    }
+  }, [])
 
   const verifyPermissions = async (): Promise<boolean> => {
 
@@ -35,11 +56,16 @@ function LocationPicker() {
       lat: location.coords.latitude,
       lng: location.coords.longitude
     })
+    onPickLocation && onPickLocation({
+      lat: location.coords.latitude,
+      lng: location.coords.longitude
+    })
   }
 
   const pickOnMapHandler = () => {
     // TODO: Find another alternative to render the map
     //* see https://github.com/rnmapbox/maps?tab=readme-ov-file
+    // console.log(locationObject, 'locationObject')
     router.push({ pathname: '/(map)', params: { ...locationObject } });
   }
 

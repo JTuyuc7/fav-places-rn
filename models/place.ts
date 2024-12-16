@@ -1,19 +1,28 @@
+import { LocationProps } from "@/components/Utils/MapPreview";
 
-export class Place {
-  id: string;
+export interface PlaceProps {
+  id: number | string;
   title: string;
   imageUri: string;
   address: string;
-  location: { lat: number; lng: number };
+  location: LocationProps;
+}
+
+export class Place {
+  id: number | string;
+  title: string;
+  imageUri: string;
+  address: string;
+  location: LocationProps;
 
   constructor(
-    id: string,
+    id: number | string,
     title: string,
     imageUri: string,
     address: string,
-    location: { lat: number; lng: number },
+    location: LocationProps,
   ) {
-    this.id = new Date().toString() + Math.random().toString()
+    this.id = id ?? new Date().toString() + Math.random().toString()
     this.title = title
     this.imageUri = imageUri
     this.address = address

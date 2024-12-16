@@ -4,7 +4,11 @@ import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import OutlineButton from "../ui/OutlineButton";
 
-function ImagePicker() {
+interface ImagePickerProps {
+  onTakeImage: (imagePath: string) => void;
+}
+
+function ImagePicker({ onTakeImage }: ImagePickerProps): JSX.Element {
   const [imageObject, setImageObject] = useState<string>();
   const [cameraPermissionInformation, requestedPermission] = useCameraPermissions();
 
@@ -34,6 +38,7 @@ function ImagePicker() {
     });
 
     setImageObject(image?.assets?.[0]?.uri);
+    onTakeImage(image?.assets?.[0]?.uri as string);
   }
 
 

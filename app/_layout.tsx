@@ -9,6 +9,7 @@ import 'react-native-reanimated'
 import { useColorScheme } from '@/hooks/useColorScheme'
 import { Text, View } from 'react-native'
 import IconButton from '@/components/ui/IconButton'
+import { init } from '@/components/Utils/DB'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
@@ -25,6 +26,13 @@ export default function RootLayout() {
       SplashScreen.hideAsync()
     }
   }, [loaded])
+
+  useEffect(() => {
+    async function loadInitialData() {
+      await init()
+    }
+    loadInitialData()
+  }, [])
 
   if (!loaded) {
     return null

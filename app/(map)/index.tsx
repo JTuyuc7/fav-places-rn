@@ -12,9 +12,5 @@ export default function Map() {
 
   return (
     <MapScreen latitude={latitude} longitude={longitude} />
-    // <View>
-    //   <Text>Map</Text>
-    //   <Button title="Go back" onPress={() => router.back()} />
-    // </View>
   )
 }
