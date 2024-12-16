@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from 'react-native-maps';
 
 import { useRouter } from 'expo-router';
@@ -8,26 +8,29 @@ import { LocationProps } from "@/components/Utils/MapPreview";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 
+
 MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MBOX_API_KEY ?? '')
 export interface MapScreenProps {
   latitude: number;
   longitude: number;
   latitudeDelta?: number;
   longitudeDelta?: number;
+  isReadOnly?: string;
 }
 
-export default function MapScreen({ latitude, longitude, latitudeDelta = 0.0922, longitudeDelta = 0.0421 }: MapScreenProps): JSX.Element {
+export default function MapScreen({ latitude, longitude, latitudeDelta = 0.0922, longitudeDelta = 0.0421, isReadOnly }: MapScreenProps): JSX.Element {
   const router = useRouter()
-  const [location, setLocation] = useState<LocationProps>({ lat: 0, lng: 0 })
+  const [location, setLocation] = useState<LocationProps>({ lat: latitude, lng: longitude })
 
   const handlePress = (e: any) => {
+    if (isReadOnly === 'true') return
     const lat = e.geometry.coordinates[1]
     const lng = e.geometry.coordinates[0]
     setLocation({ lat, lng })
   }
 
   const handleSave = () => {
-    router.push({ pathname: "/(place)", params: { ...location } })
+    router.navigate({ pathname: "/(place)", params: { ...location } })
   }
 
   return (
@@ -72,7 +75,7 @@ export default function MapScreen({ latitude, longitude, latitudeDelta = 0.0922,
           </MapboxGL.MarkerView>
         )}
       </MapboxGL.MapView>
-      {location.lat !== 0 && location.lng !== 0 && (
+      {((location.lat !== 0 && location.lng !== 0) && isReadOnly !== 'true') && (
         <View
           style={{
             position: 'absolute',

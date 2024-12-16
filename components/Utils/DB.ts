@@ -28,23 +28,23 @@ export function insertPlace(place: PlaceProps) {
       place.title,
       place.imageUri,
       place.address,
-      place.location.lat,
-      place.location.lng,
+      place.lat,
+      place.lng,
     ]
   );
 }
 
 export async function fetchPlaces() {
   const result: PlaceProps[] = await database.getAllAsync('SELECT * FROM places');
-
+  // console.log(result, 'from fetchPlaces')
   const places = [];
 
   for (const dp of result) {
     places.push(
-      new Place(dp.id, dp.title, dp.imageUri, dp.address, dp.location)
+      new Place(dp.id, dp.title, dp.imageUri, dp.address, dp.lat, dp.lng)
     );
   }
-
+  // console.log(places, 'all places')
   return places;
 }
 
@@ -57,7 +57,7 @@ export async function fetchPlaceDetails(id: number) {
   if (!dbPlace) {
     throw new Error(`Place with id ${id} not found`);
   }
-  const place = new Place(dbPlace.id, dbPlace.title, dbPlace.imageUri, dbPlace.address, dbPlace.location);
+  const place = new Place(dbPlace.id, dbPlace.title, dbPlace.imageUri, dbPlace.address, dbPlace.lat, dbPlace.lng);
 
   return place;
 }
