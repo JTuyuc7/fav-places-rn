@@ -37,12 +37,15 @@ export default function MapScreen({ latitude, longitude, latitudeDelta = 0.0922,
 
     <View style={styles.mapContainer}>
       <MapboxGL.MapView style={{ flex: 1 }}
-        projection='globe'
+        projection='mercator'
         onPress={handlePress}
+        styleURL={MapboxGL.StyleURL.SatelliteStreet}
       >
         <MapboxGL.Camera
           zoomLevel={14}
           centerCoordinate={[longitude, latitude]} // Longitude, Latitude
+          animationMode="flyTo"
+          animationDuration={6000}
         />
         {location.lat !== 0 && location.lng !== 0 && (
           <MapboxGL.MarkerView coordinate={[location?.lng, location?.lat]}>
@@ -64,7 +67,7 @@ export default function MapScreen({ latitude, longitude, latitudeDelta = 0.0922,
                   style={{
                     fontSize: 16,
                     fontWeight: 'bold',
-                    color: 'black',
+                    color: 'white',
                     position: 'relative',
                     bottom: -20,
                   }}

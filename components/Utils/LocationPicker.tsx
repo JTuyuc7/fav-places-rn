@@ -30,7 +30,7 @@ function LocationPicker({ lat = 0, lng = 0, onPickLocation }: LocationPickerProp
       setLocationObject({ lat, lng })
       onPickLocation && onPickLocation({ lat, lng })
     }
-  }, [])
+  }, [lat, lng])
 
   const verifyPermissions = async (): Promise<boolean> => {
 

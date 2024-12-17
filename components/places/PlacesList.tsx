@@ -1,8 +1,9 @@
 import { Place } from "@/models/place";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import PlaceItem from "./PlaceItem";
-import { Button } from "react-native";
 import { useRouter } from "expo-router";
+import Button from "../ui/Button";
+import { Colors } from "@/constants/Colors";
 
 interface PlacesListProps {
   places: Place[]
@@ -13,7 +14,6 @@ function PlacesList({ places }: PlacesListProps) {
   const router = useRouter()
 
   const openPlaceDetailHandler = (id: number) => {
-    // router.push(`/(place)/PlaceDetails/${id}` as any)
     router.navigate({ pathname: '/(place)/PlaceDetails', params: { id } })
   }
 
@@ -21,7 +21,7 @@ function PlacesList({ places }: PlacesListProps) {
     return (
       <View style={styles.fallbackContainer}>
         <Text style={styles.fallbackText} >No places found, maybe start adding some!</Text>
-        <Button title="Add Place" onPress={() => router.push('/(place)')} />
+        <Button customStyle={{ marginTop: 30, marginBottom: 30 }} onPress={() => router.push('/(place)')} iconName="add-circle" size={26} color={Colors.primary100}>Add</Button>
       </View>
     )
   }
