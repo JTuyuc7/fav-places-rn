@@ -1,6 +1,6 @@
 import { NativeSyntheticEvent, ScrollView, StyleSheet, Text, TextInput, TextInputChangeEventData, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Colors } from "@/constants/Colors";
 import ImagePicker from "../Utils/ImagePicker";
 import LocationPicker from "../Utils/LocationPicker";
@@ -8,16 +8,39 @@ import Button from "../ui/Button";
 import { getAddressFromLocation, LocationProps } from "../Utils/MapPreview";
 import { Place, PlaceProps } from "@/models/place";
 import { insertPlace } from "../Utils/DB";
+import { PlaceContext } from "@/store/place-context";
 
 function AddPlaceForm() {
   const router = useRouter();
   const { lat, lng } = useLocalSearchParams();
+  // Todo: Do we need this?
+  const { singlePlace, updatePlaceObject } = useContext(PlaceContext);
 
   const [placeName, setPlaceName] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<string>("");
-  const [selectedLocation, setSelectedLocation] = useState<LocationProps>({ lat: 0, lng: 0 });
+  const [selectedLocation, setSelectedLocation] = useState<LocationProps>({ lat: lat ? parseFloat(lat as string) : 0, lng: lng ? parseFloat(lng as string) : 0 });
   const [invalidForm, setInvalidForm] = useState<boolean>(false);
   const [humanAddress, setHumanAddress] = useState<string>("");
+
+  // TODO: If needed, find a way to save the changes if moving from screens
+  // let placeData: PlaceProps = {
+  //   id: '',
+  //   title: placeName,
+  //   imageUri: selectedImage,
+  //   address: humanAddress,
+  //   lat: selectedLocation.lat,
+  //   lng: selectedLocation.lng
+  // }
+  // console.log("🚀 ~ AddPlaceForm ~ placeData:", placeData)
+
+  // useEffect(() => {
+  //   if (singlePlace) {
+  //     setPlaceName(singlePlace.title);
+  //     setSelectedImage(singlePlace.imageUri);
+  //     setSelectedLocation({ lat: singlePlace.lat, lng: singlePlace.lng });
+  //     setHumanAddress(singlePlace.address);
+  //   }
+  // }, [])
 
   function changeTitleHandle(text: NativeSyntheticEvent<TextInputChangeEventData>) {
     setPlaceName(text.nativeEvent.text);
@@ -38,7 +61,7 @@ function AddPlaceForm() {
 
     try {
       await insertPlace(place as PlaceProps);
-      router.replace({ pathname: '/(app)' })
+      router.back()
     } catch (error) {
       console.log('Error saving place', error)
     } finally {
@@ -58,6 +81,11 @@ function AddPlaceForm() {
     setHumanAddress(await getAddressFromLocation(location))
   }
 
+  function handleCancel() {
+    // TODO: investigate why the replace does not remove the arrow in the top left header
+    router.back()
+  }
+
   return (
     <ScrollView style={styles.form}>
       <View>
@@ -73,7 +101,10 @@ function AddPlaceForm() {
           </View>
         )}
 
-        <Button customStyle={{ marginTop: 30, marginBottom: 30 }} onPress={savePlaceHandler}>Add Place</Button>
+        <View style={styles.actions}>
+          <Button customStyle={{ marginTop: 30, marginBottom: 30 }} onPress={handleCancel} iconName="close-circle-outline" size={26} color={Colors.primary100}>Cancel</Button>
+          <Button customStyle={{ marginTop: 30, marginBottom: 30 }} onPress={savePlaceHandler} iconName="checkmark-circle" size={26} color={Colors.primary100}>Add Place</Button>
+        </View>
       </View>
     </ScrollView>
   )
@@ -85,7 +116,6 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     padding: 24,
-
   },
   label: {
     fontWeight: "bold",
@@ -118,5 +148,12 @@ const styles = StyleSheet.create({
   errorText: {
     color: Colors.primary100,
     fontWeight: 'bold'
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    // width: '100%',
+    alignItems: 'center',
+    marginTop: 20
   }
 })
