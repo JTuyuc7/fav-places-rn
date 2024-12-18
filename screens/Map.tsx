@@ -1,5 +1,5 @@
+import Constants from "expo-constants";
 import { StyleSheet, Text, View } from "react-native";
-import MapView, { Marker } from 'react-native-maps';
 
 import { useRouter } from 'expo-router';
 import MapboxGL from '@rnmapbox/maps';
@@ -8,8 +8,13 @@ import { LocationProps } from "@/components/Utils/MapPreview";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 
+const MAP_BOX_API_KEY = Constants.expoConfig?.extra ? Constants.expoConfig?.extra.MAP_BOX_API_KEY : ''
 
-MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MBOX_API_KEY ?? '')
+//* For development purposes only
+// MapboxGL.setAccessToken(process.env.EXPO_PUBLIC_MBOX_API_KEY ?? '')
+
+//* Production
+MapboxGL.setAccessToken(MAP_BOX_API_KEY ?? '')
 export interface MapScreenProps {
   latitude: number;
   longitude: number;

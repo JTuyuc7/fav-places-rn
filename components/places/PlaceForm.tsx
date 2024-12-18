@@ -61,6 +61,7 @@ function AddPlaceForm() {
 
     try {
       await insertPlace(place as PlaceProps);
+      // TODO: validate if we are coming from the map, we should call navigate to the home screen and not to the map screen.
       router.back()
     } catch (error) {
       console.log('Error saving place', error)

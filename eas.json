@@ -6,7 +6,11 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "MAP_BOX_API_KEY": "${MAP_BOX_API_KEY}",
+        "API_MAP_KEY": "${API_MAP_KEY}"
+      }
     },
     "development-simulator": {
       "developmentClient": true,
@@ -16,10 +20,21 @@
       }
     },
     "preview": {
+      "env": {
+        "MAP_BOX_API_KEY": "${MAP_BOX_API_KEY}",
+        "API_MAP_KEY": "${API_MAP_KEY}"
+      },
+      "android": {
+        "buildType": "apk"
+      },
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "MAP_BOX_API_KEY": "${MAP_BOX_API_KEY}",
+        "API_MAP_KEY": "${API_MAP_KEY}"
+      }
     }
   },
   "submit": {
