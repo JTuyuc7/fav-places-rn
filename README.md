@@ -1,50 +1,28 @@
-# Welcome to your Expo app 👋
+# React Native - Expo App
+## An application that uses camera and location.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### How to run it?
+To run the project, you will need to creat an `.env` file where you need to specify the following variables `EXPO_PUBLIC_API_MAP_KEY` & `EXPO_PUBLIC_MBOX_API_KEY` which they will be used to work with the `expo-image-picker` & `@rnmapbox/maps` respectively, these variables will be used only for development, as for the preview and production builds you will need to configure them in your Expo dashboard project app, once you have configured you will need to install the dependencies by running `npm i`.
 
-## Get started
+Since the proyect uses the `@rnmapbox/maps` library, this needs native code, so you will need to create a preview build to work with the app, (check the expo docs) to create a `preview` build.
 
-1. Install dependencies
+### How the app looks?
+Some images on how the app looks.
 
-   ```bash
-   npm install
-   ```
+#### Add screen
+![Simulator Screenshot - iPhone 16 Pro Max - 2024-12-16 at 23 50 32](https://github.com/user-attachments/assets/d0220ce2-1bef-474d-a3bf-d0afed651d4b)
 
-2. Start the app
+#### Full screen app (read only) when viewing the place details
+![Screenshot_1734414697](https://github.com/user-attachments/assets/ec116024-7027-4b58-80e7-59e8f85e6689)
 
-   ```bash
-    npx expo start
-   ```
+#### Details screen
+![Screenshot_1734414686](https://github.com/user-attachments/assets/a23df813-cd2a-4f5b-8c3f-85bc01c0a54d)
 
-In the output, you'll find options to open the app in a
+#### Form place, where you can take the image and either a preview of the location or navigate to the page where you can select your location.
+![Screenshot_1734414680](https://github.com/user-attachments/assets/bcc76d26-226d-4ac6-a4c2-1624c16b0d83)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+#### Launch the camera to take pictures.
+![Screenshot_1734414664](https://github.com/user-attachments/assets/7ceec274-300f-403f-8d65-921f7defe6b0)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+#### Main page where you can list all your favorite places.
+![Screenshot_1734414645](https://github.com/user-attachments/assets/b1b5298e-6594-4351-b7cc-66a7f2493307)
